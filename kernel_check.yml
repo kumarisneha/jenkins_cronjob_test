@@ -1,0 +1,12 @@
+---
+- name: Get kernel version
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Run uname
+      command: uname -r
+      register: kernel
+
+    - name: Display kernel
+      debug:
+        msg: "Kernel on {{ inventory_hostname }} is {{ kernel.stdout }}"
