@@ -1,28 +1,23 @@
 pipeline {
-    agent any
+  agent any
 
-    triggers {
-        // Cron: Every day at 3:30 AM
-        cron('30 3 * * *')
+  triggers {
+    cron('H/30 * * * *')  // Every 30 minutes
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        git 'https://github.com/kumarisneha/jenkins_cronjob_test.git'
+      }
     }
 
-    environment {
-        ANSIBLE_HOST_KEY_CHECKING = 'False'
-    }
-
-    stages {
-        stage('Clone Git Repository') {
-            steps {
-                git url: 'https://github.com/kumarisneha/jenkins_cronjob_test.git'
-            }
+    stage('Run Ansible') {
+      steps {
+        dir('ansible') {
+          sh 'ansible-playbook -i inventory get_kernel.yml'
         }
-
-        stage('Run Scheduled Job via Ansible') {
-            steps {
-                sh '''
-                    ansible-playbook -i inventory.ini cron_playbook.yml
-                '''
-            }
-        }
+      }
     }
+  }
 }
