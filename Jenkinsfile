@@ -15,7 +15,7 @@ pipeline {
     stage('Run Ansible') {
       steps {
         dir('ansible') {
-          sh 'ansible-playbook -i inventory get_kernel.yml'
+          sh 'ansible-playbook -i inventory ansible/get_kernel.yml'
         }
       }
     }
