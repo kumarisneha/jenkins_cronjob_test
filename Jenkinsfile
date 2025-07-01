@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Clone Git Repository') {
             steps {
-                git url: 'https://github.com/your-username/ci-cron-pipeline.git'
+                git url: 'https://github.com/kumarisneha/jenkins_cronjob_test.git'
             }
         }
 
